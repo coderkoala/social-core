@@ -20,8 +20,8 @@ API_VERSION = 2.9
 class FacebookOAuth2(BaseOAuth2):
     """Facebook OAuth2 authentication backend"""
     name = 'facebook'
-    REDIRECT_STATE = False
     RESPONSE_TYPE = None
+    REDIRECT_STATE = False
     SCOPE_SEPARATOR = ','
     AUTHORIZATION_URL = 'https://www.facebook.com/v{version}/dialog/oauth'
     ACCESS_TOKEN_URL = \
@@ -88,7 +88,7 @@ class FacebookOAuth2(BaseOAuth2):
 
     @handle_http_errors
     def auth_complete(self, *args, **kwargs):
-        """Completes login process, must return user instance"""
+        """Completes loging process, must return user instance"""
         self.process_error(self.data)
         if not self.data.get('code'):
             raise AuthMissingParameter(self, 'code')
@@ -173,7 +173,7 @@ class FacebookAppOAuth2(FacebookOAuth2):
         return False
 
     def auth_complete(self, *args, **kwargs):
-        access_token = self.data.get('access_token')
+        access_token = None
         response = {}
 
         if 'signed_request' in self.data:
